@@ -4,6 +4,7 @@
                     >
 
     <Style x:Key="HomeListBoxStyle" TargetType="ListBox">
+        <Setter Property="Background" Value="White"/>
         <Setter Property="ItemsPanel" >
             <Setter.Value>
                 <ItemsPanelTemplate>

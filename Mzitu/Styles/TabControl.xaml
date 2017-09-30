@@ -10,7 +10,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid x:Name="templateRoot" SnapsToDevicePixels="True" Background="#00FFFFFF">
-                        <Border x:Name="mainBorder" BorderBrush="White" BorderThickness="0,0,0,3" >
+                        <Border x:Name="mainBorder" Background="Transparent">
                             <ContentPresenter Margin="30,0,30,0" x:Name="contentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}"
                                               ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" 
                                               Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" 
@@ -19,8 +19,10 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Selector.IsSelected" Value="false">
-                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="{x:Null}"/>
+                        <Trigger Property="IsSelected" Value="true">
+                            <!--<Setter TargetName="mainBorder" Property="BorderBrush" Value="{x:Null}"/>-->
+                            <Setter TargetName="mainBorder" Property="Background" Value="White"/>
+                            <Setter  Property="Foreground" Value="{StaticResource AppColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -47,7 +49,7 @@
                             <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
                             <RowDefinition x:Name="RowDefinition1" Height="*"/>
                         </Grid.RowDefinitions>
-                        <TabPanel x:Name="HeaderPanel" Grid.Column="0" IsItemsHost="True" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1" HorizontalAlignment="Center"/>
+                        <TabPanel x:Name="HeaderPanel" Grid.Column="0" IsItemsHost="True" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1" HorizontalAlignment="Left" Margin="140,0,0,0"/>
                         <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentTemplate="{TemplateBinding SelectedContentTemplate}" Content="{TemplateBinding SelectedContent}" ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>

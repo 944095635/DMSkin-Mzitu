@@ -18,7 +18,7 @@
         DMWindowShadowColor="#FFC8C8C8" 
         DMSystemButtonShadowEffect="0"
         ResizeMode="CanResizeWithGrip"
-        Height="850" Width="1300" 
+        Height="990" Width="1300" 
                      MinWidth="810"
 		WindowStartupLocation="CenterScreen"
         MinHeight="268">
@@ -34,6 +34,9 @@
             <TabItem Header="日本妹子"></TabItem>
             <TabItem Header="清纯妹子"></TabItem>
         </TabControl>
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top"  Height="60" Width="120">
+            <TextBlock Text="Mzitu" FontSize="44" Margin="5,0,0,0"></TextBlock>
+        </Border>
         <ResizeGrip HorizontalAlignment="Right" VerticalAlignment="Bottom"></ResizeGrip>
     </Grid>
 </DMSkin:DMSkinWindow>
