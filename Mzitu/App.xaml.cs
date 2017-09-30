@@ -12,5 +12,13 @@ namespace Mzitu
     /// </summary>
     public partial class App : Application
     {
+        public static MainWindow APP;
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            MainWindow = APP;
+            APP = new MainWindow();
+            APP.Show();
+        }
+
     }
 }

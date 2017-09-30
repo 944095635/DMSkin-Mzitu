@@ -1,5 +1,4 @@
-﻿using DMSkin.WPF.Small;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,20 +15,13 @@ using System.Windows.Shapes;
 namespace Mzitu
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// ImageView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : DMSkinWindow
+    public partial class ImageView : UserControl
     {
-        public MainWindow()
+        public ImageView()
         {
             InitializeComponent();
-        }
-
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (MainTab.SelectedIndex == 1)
-            {
-            }
         }
     }
 }
