@@ -19,6 +19,5 @@ namespace Mzitu
             APP = new MainWindow();
             APP.Show();
         }
-
     }
 }
