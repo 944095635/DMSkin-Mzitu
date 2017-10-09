@@ -20,22 +20,28 @@ namespace Mzitu
     /// <summary>
     /// WaitingProgress.xaml 的交互逻辑
     /// </summary>
-    public partial class WaitingProgress : UserControl, INotifyPropertyChanged
+    public partial class WaitingProgress : UserControl
     {
-        #region UI更新接口
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName = null)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
         private Storyboard story;
         public WaitingProgress()
         {
             InitializeComponent();
             this.story = (base.Resources["waiting"] as Storyboard);
+
+            if (RunStateDescriptor != null)
+            {
+                RunStateDescriptor.AddValueChanged(this,delegate
+                {
+                    if (RunState)
+                    {
+                        Start();
+                    }
+                    else
+                    {
+                        Stop();
+                    }
+                });
+            }
         }
 
         public bool RunState
@@ -45,21 +51,13 @@ namespace Mzitu
             }
             set {
                 SetValue(RunStateProperty, value);
-                if (value)
-                {
-                    Start();
-                }
-                else
-                {
-                    Stop();
-                }
-                OnPropertyChanged("RunState");
             }
         }
 
         public static readonly DependencyProperty RunStateProperty =
             DependencyProperty.Register("RunState", typeof(bool), typeof(WaitingProgress));
 
+        DependencyPropertyDescriptor RunStateDescriptor = DependencyPropertyDescriptor.FromProperty(RunStateProperty, typeof(WaitingProgress));
 
         public void Start()
         {

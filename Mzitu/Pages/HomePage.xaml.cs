@@ -20,10 +20,7 @@ namespace Mzitu
         public HomePage()
         {
             InitializeComponent();
-            DataContext = HomePageViewModel.Initialization(new Action(() =>
-            {
-                //loading.Stop();
-            }));
+            DataContext = HomePageViewModel.Initialization();
         }
         ScrollViewer sv;
         private void ImageListControl_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -40,13 +37,16 @@ namespace Mzitu
 
         public void LoadData()
         {
-            HomePageViewModel.Initialization().NextPage(new Action(() =>
+            HomePageViewModel.Initialization().NextPage();
+
+
+            if (!HomePageViewModel.Initialization().Waterfall)
             {
-                if (!HomePageViewModel.Initialization().Waterfall)
+                if (HomePageViewModel.Initialization().ImageList.Count>1)
                 {
                     ImageListControl.ScrollIntoView(HomePageViewModel.Initialization().ImageList[0]);
                 }
-            }));
+            }
         }
 
         private void Page_Click(object sender, RoutedEventArgs e)

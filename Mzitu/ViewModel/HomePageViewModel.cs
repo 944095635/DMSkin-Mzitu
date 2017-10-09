@@ -13,37 +13,33 @@ namespace Mzitu
     {
         private static HomePageViewModel _HomePageViewModel;
 
-        public static HomePageViewModel Initialization(Action action)
+        public static HomePageViewModel Initialization()
         {
             if (_HomePageViewModel == null)
             {
-                _HomePageViewModel = new HomePageViewModel(action);
+                _HomePageViewModel = new HomePageViewModel();
             }
             return _HomePageViewModel;
         }
 
-        public static HomePageViewModel Initialization()
-        {
-            return _HomePageViewModel;
-        }
 
         /// <summary>
         /// 初始化数据
         /// </summary>
-        private HomePageViewModel(Action action)
+        private HomePageViewModel()
         {
             //加载第一页数据
-            LoadData(action);
+            LoadData();
         }
 
 
-        internal void NextPage(Action action)
+        internal void NextPage()
         {
-            LoadData(action);
+            LoadData();
         }
 
 
-        public void LoadData(Action action)
+        public void LoadData()
         {
             if (RunState)
             {
@@ -75,7 +71,6 @@ namespace Mzitu
                  App.DispatcherHelper.Invoke(new Action(() =>
                  {
                      PageCount = pageSize;
-                     action();//关闭动画
                 }));
                  RunState = false;
              }), new Action<Exception>((ex) =>
@@ -83,7 +78,6 @@ namespace Mzitu
                  App.DispatcherHelper.Invoke(new Action(() =>
                  {
                      PageIndex--;
-                     action();//关闭动画
                 }));
                  RunState = false;
              }));
