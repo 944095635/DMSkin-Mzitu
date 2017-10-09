@@ -2,4 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Mzitu.Styles">
     <SolidColorBrush x:Key="AppColor">#FFFF88AF</SolidColorBrush>
+    <FontFamily x:Key="IconFont">/Mzitu;component/Fonts/#iconfont</FontFamily>
 </ResourceDictionary>

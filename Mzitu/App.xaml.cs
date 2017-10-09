@@ -14,7 +14,6 @@ namespace Mzitu
     public partial class App : Application
     {
         public static Dispatcher DispatcherHelper;
-
         public static MainWindow APP;
         protected override void OnStartup(StartupEventArgs e)
         {

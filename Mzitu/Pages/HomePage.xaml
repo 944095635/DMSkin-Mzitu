@@ -7,7 +7,7 @@
              mc:Ignorable="d"  
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListBox Style="{StaticResource HomeListBoxStyle}"  x:Name="ImageListControl" ItemsSource="{Binding ImageList}" 
+        <ListBox Style="{StaticResource HomeListBoxStyle}"  x:Name="ImageListControl" ItemsSource="{Binding ImageList}"  SelectionChanged="ImageListControl_SelectionChanged"
                  ScrollViewer.ScrollChanged="ImageListControl_ScrollChanged" Margin="0,0,0,30"></ListBox>
         <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
             <Label Content="页数:" HorizontalAlignment="Left" Foreground="#FF888888" FontSize="12"></Label>

@@ -58,6 +58,10 @@
     <Compile Include="Controls\WaitingProgress.xaml.cs">
       <DependentUpon>WaitingProgress.xaml</DependentUpon>
     </Compile>
+    <Page Include="Styles\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\CheckBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -92,6 +96,7 @@
       <DependentUpon>ImageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\HomePageViewModel.cs" />
+    <Compile Include="ViewModel\ImageViewViewModel.cs" />
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>

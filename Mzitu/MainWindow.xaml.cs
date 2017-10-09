@@ -31,5 +31,10 @@ namespace Mzitu
             {
             }
         }
+
+        public void ShowImageControl()
+        {
+            ImageShow.Visibility = Visibility.Visible;
+        }
     }
 }

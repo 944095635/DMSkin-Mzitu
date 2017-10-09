@@ -78,5 +78,21 @@ namespace Mzitu
 
             }
         }
+
+        /// <summary>
+        /// 选中子项
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImageListControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ImageListControl.SelectedItem is Model.Image image)
+            {
+                ImageViewViewModel.Initialization().Id = image.Id;
+                ImageViewViewModel.Initialization().LoadImage();
+
+                App.APP.ShowImageControl();
+            }
+        }
     }
 }

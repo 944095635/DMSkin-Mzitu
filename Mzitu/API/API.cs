@@ -58,10 +58,12 @@ namespace Mzitu
                                 //<span class="view">4,482次</span>
                                 image.Count = Regex.Matches(ItemText, "view\"[\\s\\S]*?</span>")[0].Value.Split('>')[1].Split('<')[0];
 
+                                image.Id = image.Href.Substring(image.Href.LastIndexOf("/")+1);
+
                                 //先放置初始图片 //异步加载图片
                                 image.ImageUrl = Regex.Matches(ItemText, "data-original=[\\s\\S]*?/>")[0].Value.Split('\'')[1];
 
-                                DownImage(image.Href.Substring(image.Href.LastIndexOf('/'))+".jpg", image.ImageUrl, new Action<string>((path) =>
+                                DownImage(image.Href.Substring(image.Href.LastIndexOf('/'))+".jpg",image.ImageUrl, new Action<string>((path) =>
                                 {
                                     image.ImageUrl = path;
                                 }));
@@ -85,7 +87,7 @@ namespace Mzitu
                         }
                         //<a class="page-numbers"
                         //回传数据
-                        action(list, pageSize);
+                        action(list,pageSize);
                     }
 
                 }
@@ -97,6 +99,56 @@ namespace Mzitu
             });
 
         }
+
+        public static void ImagePage(string Id,int pageIndex,Action<string,int> action,Action<Exception> exaction)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    string URL = "http://www.mzitu.com/" + Id + "/" + pageIndex;
+                    using (HttpWebResponse response = HTTP.CreateGetHttpResponse(URL))
+                    {
+                        //使用手册
+                        //返回加密的GZIP
+                        GZipStream g = new GZipStream(response.GetResponseStream(), CompressionMode.Decompress);
+                        StreamReader myStreamReader = new StreamReader(g, Encoding.GetEncoding("UTF-8"));
+                        String msg = myStreamReader.ReadToEnd();
+
+                        //msg是首页的html
+                        //<ul id="pins">  </ul>
+                        // 定义正则表达式用来匹配 标签 
+                        List<Image> list = new List<Image>();
+                        int pageSize = 0;
+                        //<div class="main-image"><p><a href="http://www.mzitu.com/104746/2" ><img src="http://i.meizitu.net/2017/10/06c01.jpg" alt="性感美女温伊怡肉弹袭击 巨乳Q弹水嫩无比" /></a></p></ div >
+                        var matches = Regex.Matches(msg, "<div class=\"main-image\">[\\s\\S]*?</div>");//取出每个<tr>
+                        foreach (Match mc in matches)
+                        {
+                            string allText = mc.Groups[0].Value;
+
+                            var matchesItem = Regex.Matches(allText, "<img[\\s\\S]*?/>");//取出每个<tr>
+                            foreach (Match mcItem in matchesItem)
+                            {
+
+                                string ItemText = mcItem.Groups[0].Value.Split('\"')[1];
+
+                                DownImage(Id+"\\",Id +"_"+pageIndex+ ".jpg",ItemText,new Action<string>((path) =>
+                                {
+                                    action(path,pageSize);
+                                }));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)//全局错误-网络错误 操作错误
+                {
+                    exaction(ex);
+                    //MessageBox.Show("首页数据解析失败!"+ex.Message);
+                }
+            });
+
+        }
+
 
         //Request URL:http://i.meizitu.net/thumbs/2017/09/104369_30b22_236.jpg
         //Request Method:GET
@@ -141,6 +193,33 @@ namespace Mzitu
             Task.Factory.StartNew(() => {
                 string DirectoryPath = HTTP.RunPath + "images\\";
                 string ImagePath = HTTP.RunPath + "images\\" + name;
+
+                if (!Directory.Exists(DirectoryPath))
+                {
+                    Directory.CreateDirectory(DirectoryPath);
+                }
+                if (!File.Exists(ImagePath))
+                {
+                    using (WebClient wb = new WebClient())
+                    {
+                        wb.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                        wb.Headers.Add("Accept-Encoding", "gzip, deflate, sdch");
+                        wb.Headers.Add("Cache-Control", "max-age=0");
+                        wb.Headers.Add("If-None-Match", "59cfaaac-56af");
+                        wb.Headers.Add("Host", "i.meizitu.net");
+                        wb.Headers.Add("Referer", "http://www.mzitu.com/");
+                        wb.DownloadFile(path, ImagePath);
+                    }
+                }
+                action(ImagePath);
+            });
+        }
+
+        public static void DownImage(string DirectoryName, string name, string path, Action<string> action)
+        {
+            Task.Factory.StartNew(() => {
+                string DirectoryPath = HTTP.RunPath + "images\\" + DirectoryName;
+                string ImagePath = HTTP.RunPath + "images\\"+DirectoryName+ name;
 
                 if (!Directory.Exists(DirectoryPath))
                 {

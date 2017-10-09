@@ -34,6 +34,7 @@
             <TabItem Header="日本妹子"></TabItem>
             <TabItem Header="清纯妹子"></TabItem>
         </TabControl>
+        <local:ImageView x:Name="ImageShow" Margin="0,60,0,0" Visibility="Collapsed"></local:ImageView>
         <Border HorizontalAlignment="Left" VerticalAlignment="Top"  Height="60" Width="120">
             <TextBlock Text="Mzitu" FontSize="44" Margin="5,0,0,0"></TextBlock>
         </Border>

@@ -22,6 +22,7 @@
                 <ResourceDictionary Source="Styles/TabControl.xaml"/>
                 <ResourceDictionary Source="Styles/ListBox.xaml"/>
                 <ResourceDictionary Source="Styles/CheckBox.xaml"/>
+                <ResourceDictionary Source="Styles/Button.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
