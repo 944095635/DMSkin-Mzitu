@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Mzitu.Model;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -18,8 +20,16 @@ namespace Mzitu
     /// <summary>
     /// WaitingProgress.xaml 的交互逻辑
     /// </summary>
-    public partial class WaitingProgress : UserControl
+    public partial class WaitingProgress : UserControl, INotifyPropertyChanged
     {
+        #region UI更新接口
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
 
         private Storyboard story;
         public WaitingProgress()
@@ -27,6 +37,29 @@ namespace Mzitu
             InitializeComponent();
             this.story = (base.Resources["waiting"] as Storyboard);
         }
+
+        public bool RunState
+        {
+            get {
+                return (bool)GetValue(RunStateProperty);
+            }
+            set {
+                SetValue(RunStateProperty, value);
+                if (value)
+                {
+                    Start();
+                }
+                else
+                {
+                    Stop();
+                }
+                OnPropertyChanged("RunState");
+            }
+        }
+
+        public static readonly DependencyProperty RunStateProperty =
+            DependencyProperty.Register("RunState", typeof(bool), typeof(WaitingProgress));
+
 
         public void Start()
         {

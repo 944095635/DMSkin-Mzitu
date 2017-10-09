@@ -15,23 +15,17 @@ using System.Windows.Shapes;
 
 namespace Mzitu
 {
-    /// <summary>
-    /// HomePage.xaml 的交互逻辑
-    /// </summary>
     public partial class HomePage : UserControl
     {
         public HomePage()
         {
             InitializeComponent();
-            loading.Start();
-            DataContext = HomePageViewModel.Initialization(Dispatcher, new Action(() =>
+            DataContext = HomePageViewModel.Initialization(new Action(() =>
             {
-                loading.Stop();
+                //loading.Stop();
             }));
         }
-
         ScrollViewer sv;
-
         private void ImageListControl_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             if (sv == null)
@@ -46,14 +40,12 @@ namespace Mzitu
 
         public void LoadData()
         {
-            loading.Start();
             HomePageViewModel.Initialization().NextPage(new Action(() =>
             {
                 if (!HomePageViewModel.Initialization().Waterfall)
                 {
                     ImageListControl.ScrollIntoView(HomePageViewModel.Initialization().ImageList[0]);
                 }
-                loading.Stop();
             }));
         }
 

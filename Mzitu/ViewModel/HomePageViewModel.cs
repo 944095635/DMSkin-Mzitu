@@ -13,11 +13,11 @@ namespace Mzitu
     {
         private static HomePageViewModel _HomePageViewModel;
 
-        public static HomePageViewModel Initialization(Dispatcher _dispatcher, Action action)
+        public static HomePageViewModel Initialization(Action action)
         {
             if (_HomePageViewModel == null)
             {
-                _HomePageViewModel = new HomePageViewModel(_dispatcher, action);
+                _HomePageViewModel = new HomePageViewModel(action);
             }
             return _HomePageViewModel;
         }
@@ -27,19 +27,15 @@ namespace Mzitu
             return _HomePageViewModel;
         }
 
-
-        Dispatcher dispatcher;
         /// <summary>
         /// 初始化数据
         /// </summary>
-        private HomePageViewModel(Dispatcher _dispatcher, Action action)
+        private HomePageViewModel(Action action)
         {
-            dispatcher = _dispatcher;
             //加载第一页数据
             LoadData(action);
         }
 
-        bool loadState = false;
 
         internal void NextPage(Action action)
         {
@@ -49,11 +45,11 @@ namespace Mzitu
 
         public void LoadData(Action action)
         {
-            if (loadState)
+            if (RunState)
             {
                 return;
             }
-            loadState = true;
+            RunState = true;
             PageIndex++;
             //加载第一页数据
             API.MainPage(PageIndex, new Action<List<Image>, int>((list, pageSize) =>
@@ -62,7 +58,7 @@ namespace Mzitu
                 //homePage.Dispatcher.Invoke();
                 if (!Waterfall)//瀑布
                 {
-                     dispatcher.Invoke(new Action(() =>
+                     App.DispatcherHelper.Invoke(new Action(() =>
                      {
                          ImageList.Clear();
                      }));
@@ -70,26 +66,26 @@ namespace Mzitu
 
                  foreach (var item in list)
                  {
-                     dispatcher.Invoke(new Action(() =>
+                     App.DispatcherHelper.Invoke(new Action(() =>
                      {
                          ImageList.Add(item);
                      }));
                  }
                  Thread.Sleep(500);
-                 dispatcher.Invoke(new Action(() =>
+                 App.DispatcherHelper.Invoke(new Action(() =>
                  {
                      PageCount = pageSize;
                      action();//关闭动画
                 }));
-                 loadState = false;
+                 RunState = false;
              }), new Action<Exception>((ex) =>
              {
-                 dispatcher.Invoke(new Action(() =>
+                 App.DispatcherHelper.Invoke(new Action(() =>
                  {
                      PageIndex--;
                      action();//关闭动画
                 }));
-                 loadState = false;
+                 RunState = false;
              }));
         }
         int pageCount = 0;
@@ -150,5 +146,18 @@ namespace Mzitu
         }
 
 
+        private bool runState = false;
+        public bool RunState
+        {
+            get
+            {
+                return runState;
+            }
+            set
+            {
+                runState = value;
+                OnPropertyChanged("RunState");
+            }
+        }
     }
 }
