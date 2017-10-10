@@ -3,35 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Mzitu"
-             mc:Ignorable="d"  Background="#F1000000"
+             xmlns:local="clr-namespace:Mzitu" Focusable="True"
+             mc:Ignorable="d"  Background="#F1000000"   IsVisibleChanged="UserControl_IsVisibleChanged"
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
-        <Grid>
-                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                    <Image Name="img"   
-                       MouseDown="img_MouseDown" MouseWheel="img_MouseWheel"
-                       MouseMove="img_MouseMove"
-                       MouseUp="img_MouseUp"
-                       MouseLeave="img_MouseLeave"
+        <ScrollViewer x:Name="cs" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" PreviewKeyUp="Cs_PreviewKeyUp">
+            <Image Name="img"   
+                       MouseDown="Img_MouseDown" MouseWheel="Img_MouseWheel"
+                       MouseMove="Img_MouseMove"
+                       MouseUp="Img_MouseUp"
+                       MouseLeave="Img_MouseLeave"
                        Stretch="Uniform"  
                        RenderOptions.BitmapScalingMode="HighQuality"  Source="{Binding Image}">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform x:Name="sfr" />
-                                <TranslateTransform x:Name="tlt" />
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
-                </ScrollViewer>
-            </Grid>
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="sfr" />
+                        <TranslateTransform x:Name="tlt" />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </ScrollViewer>
         <Button  x:Name="BtnPreviou" Click="BtnPreviou_Click" Content="&#xe96c;" Style="{StaticResource IconButton}" Margin="20,0,10,0" HorizontalAlignment="Left"></Button>
         <Button x:Name="BtnNext" Click="BtnNext_Click" Content="&#xe638;" Style="{StaticResource IconButton}" Margin="10,0,20,0" HorizontalAlignment="Right"></Button>
         <Button x:Name="BtnClose" Click="BtnClose_Click" Content="&#xe8e0;" Style="{StaticResource IconButton2}"  HorizontalAlignment="Right" VerticalAlignment="Top"  FontSize="40" ></Button>
-        <TextBlock Text="{Binding PageIndex}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10" FontSize="20">
-            <TextBlock.Effect>
-                <DropShadowEffect ShadowDepth="0" BlurRadius="15"></DropShadowEffect>
-            </TextBlock.Effect>
-        </TextBlock>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10" Orientation="Horizontal">
+            <TextBlock Text="{Binding PageIndex}"  FontSize="20">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="15"></DropShadowEffect>
+                </TextBlock.Effect>
+            </TextBlock>
+            <TextBlock Text=" / " FontSize="20">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="15"></DropShadowEffect>
+                </TextBlock.Effect>
+            </TextBlock>
+            <TextBlock Text="{Binding PageSize}" FontSize="20">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="15"></DropShadowEffect>
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -26,15 +26,14 @@
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Top"  Height="60" Background="{StaticResource AppColor}">
         </Border>
         <TabControl x:Name="MainTab" SelectionChanged="TabControl_SelectionChanged" Style="{DynamicResource TabControlStyle}">
-            <TabItem Header="首页">
+            <TabItem Header="首页" IsTabStop="False">
                 <local:HomePage></local:HomePage>
             </TabItem>
-            <TabItem Header="最热"></TabItem>
-            <TabItem Header="专题"></TabItem>
-            <TabItem Header="日本妹子"></TabItem>
-            <TabItem Header="清纯妹子"></TabItem>
+            <TabItem Header="最热" IsTabStop="False"></TabItem>
+            <TabItem Header="专题" IsTabStop="False"></TabItem>
+            <TabItem Header="日本妹子" IsTabStop="False"></TabItem>
+            <TabItem Header="清纯妹子" IsTabStop="False"></TabItem>
         </TabControl>
-        <local:ImageView x:Name="ImageShow" Margin="0,60,0,0" Visibility="Collapsed"></local:ImageView>
         <Border HorizontalAlignment="Left" VerticalAlignment="Top"  Height="60" Width="120">
             <TextBlock Text="Mzitu" FontSize="44" Margin="5,0,0,0"></TextBlock>
         </Border>

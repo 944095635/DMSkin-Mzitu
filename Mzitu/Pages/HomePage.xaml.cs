@@ -91,7 +91,8 @@ namespace Mzitu
                 ImageViewViewModel.Initialization().Id = image.Id;
                 ImageViewViewModel.Initialization().LoadImage();
 
-                App.APP.ShowImageControl();
+                ImageShow.Visibility = Visibility.Visible;
+                ImageShow.cs.Focus();
             }
         }
     }

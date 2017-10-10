@@ -7,7 +7,8 @@
              mc:Ignorable="d"  
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListBox Style="{StaticResource HomeListBoxStyle}"  x:Name="ImageListControl" ItemsSource="{Binding ImageList}"  SelectionChanged="ImageListControl_SelectionChanged"
+        <ListBox Style="{StaticResource HomeListBoxStyle}"  x:Name="ImageListControl" ItemsSource="{Binding ImageList}"
+                 SelectionChanged="ImageListControl_SelectionChanged"
                  ScrollViewer.ScrollChanged="ImageListControl_ScrollChanged" Margin="0,0,0,30"></ListBox>
         <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
             <Label Content="页数:" HorizontalAlignment="Left" Foreground="#FF888888" FontSize="12"></Label>
@@ -23,5 +24,6 @@
             <Button Click="Page_Click" Style="{StaticResource ButtonStyle}" Margin="5,0,5,0"  Content="尾页"></Button>
         </StackPanel>
         <local:WaitingProgress RunState="{Binding RunState}"></local:WaitingProgress>
+        <local:ImageView x:Name="ImageShow" Visibility="Collapsed"></local:ImageView>
     </Grid>
 </UserControl>

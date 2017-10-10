@@ -120,6 +120,7 @@ namespace Mzitu
                         // 定义正则表达式用来匹配 标签 
                         List<Image> list = new List<Image>();
                         int pageSize = 0;
+                        string img = "";
                         //<div class="main-image"><p><a href="http://www.mzitu.com/104746/2" ><img src="http://i.meizitu.net/2017/10/06c01.jpg" alt="性感美女温伊怡肉弹袭击 巨乳Q弹水嫩无比" /></a></p></ div >
                         var matches = Regex.Matches(msg, "<div class=\"main-image\">[\\s\\S]*?</div>");//取出每个<tr>
                         foreach (Match mc in matches)
@@ -130,14 +131,37 @@ namespace Mzitu
                             foreach (Match mcItem in matchesItem)
                             {
 
-                                string ItemText = mcItem.Groups[0].Value.Split('\"')[1];
-
-                                DownImage(Id+"\\",Id +"_"+pageIndex+ ".jpg",ItemText,new Action<string>((path) =>
-                                {
-                                    action(path,pageSize);
-                                }));
+                                img = mcItem.Groups[0].Value.Split('\"')[1];
                             }
                         }
+
+
+                        var page = Regex.Matches(msg, "<span>[\\s\\S]*?</span>");
+                        foreach (Match mc in page)
+                        {
+                            if (mc.Groups[0] != null && mc.Groups[0].Value != null)
+                            {
+                                string allText = mc.Groups[0].Value;
+                                
+                                 allText = allText.Replace("<span>", "").Replace("</span>", "");
+                                if (allText.Length < 5)
+                                {
+                                    int temp = Convert.ToInt32(allText);
+                                    if (temp > pageSize)
+                                    {
+                                        pageSize = temp;
+                                    }
+
+                                }
+                            }
+                        }
+
+
+                        DownImage(Id + "\\", Id + "_" + pageIndex + ".jpg", img, new Action<string>((path) =>
+                        {
+                            action(path, pageSize);
+                        }));
+
                     }
                 }
                 catch (Exception ex)//全局错误-网络错误 操作错误

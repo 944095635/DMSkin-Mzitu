@@ -21,7 +21,7 @@ namespace Mzitu
             }
             return _HomePageViewModel;
         }
-
+        
         public void LoadImage()
         {
             Image = "";
@@ -30,11 +30,12 @@ namespace Mzitu
                  App.DispatcherHelper.Invoke(new Action(() =>
                 {
                     Image = imageitem;
+                    PageSize = pageSize;
                 }));
              })
              , new Action<Exception>((ex) =>
              {
-                 
+                 LoadImage();
              }));
         }
 
@@ -66,6 +67,17 @@ namespace Mzitu
             }
         }
 
+        int pageSize = 1;
+        public int PageSize
+        {
+            get { return pageSize; }
+            set
+            {
+                pageSize = value;
+                OnPropertyChanged("PageSize");
+            }
+        }
+
 
         private string id = "0";
         public string Id
@@ -84,6 +96,10 @@ namespace Mzitu
         internal void Next()
         {
             PageIndex++;
+            if (PageIndex>PageSize&&PageSize>0)
+            {
+                PageIndex = PageSize;
+            }
             LoadImage();
         }
 

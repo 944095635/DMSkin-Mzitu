@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -24,29 +25,30 @@ namespace Mzitu
             InitializeComponent();
 
             this.DataContext = ImageViewViewModel.Initialization();
+
         }
 
         private bool isMouseLeftButtonDown = false;
         Point previousMousePoint = new Point(0, 0);
     
 
-        private void img_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Img_MouseDown(object sender, MouseButtonEventArgs e)
         {
             isMouseLeftButtonDown = true;
             previousMousePoint = e.GetPosition(img);
         }
 
-        private void img_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Img_MouseUp(object sender, MouseButtonEventArgs e)
         {
             isMouseLeftButtonDown = false;
         }
 
-        private void img_MouseLeave(object sender, MouseEventArgs e)
+        private void Img_MouseLeave(object sender, MouseEventArgs e)
         {
             isMouseLeftButtonDown = false;
         }
 
-        private void img_MouseMove(object sender, MouseEventArgs e)
+        private void Img_MouseMove(object sender, MouseEventArgs e)
         {
             if (isMouseLeftButtonDown == true)
             {
@@ -56,7 +58,7 @@ namespace Mzitu
             }
         }
 
-        private void img_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void Img_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Point centerPoint = e.GetPosition(img);
 
@@ -93,6 +95,24 @@ namespace Mzitu
             tlt.Y = 0;
 
             ImageViewViewModel.Initialization().PageIndex = 1;
+        }
+
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            cs.RaiseEvent(new RoutedEventArgs(ScrollViewer.ScrollChangedEvent));
+        }
+
+        private void Cs_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                ImageViewViewModel.Initialization().Previou();
+            }
+
+            if (e.Key == Key.Right)
+            {
+                ImageViewViewModel.Initialization().Next();
+            }
         }
     }
 }

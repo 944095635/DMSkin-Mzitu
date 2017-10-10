@@ -27,14 +27,7 @@ namespace Mzitu
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MainTab.SelectedIndex == 1)
-            {
-            }
-        }
-
-        public void ShowImageControl()
-        {
-            ImageShow.Visibility = Visibility.Visible;
+        
         }
     }
 }
