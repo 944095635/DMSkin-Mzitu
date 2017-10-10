@@ -27,7 +27,7 @@
             </Grid>
         <Button  x:Name="BtnPreviou" Click="BtnPreviou_Click" Content="&#xe96c;" Style="{StaticResource IconButton}" Margin="20,0,10,0" HorizontalAlignment="Left"></Button>
         <Button x:Name="BtnNext" Click="BtnNext_Click" Content="&#xe638;" Style="{StaticResource IconButton}" Margin="10,0,20,0" HorizontalAlignment="Right"></Button>
-        <Button x:Name="BtnClose" Click="BtnClose_Click" Content="&#xe625;" Style="{StaticResource IconButton2}" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top"  FontSize="40" ></Button>
+        <Button x:Name="BtnClose" Click="BtnClose_Click" Content="&#xe8e0;" Style="{StaticResource IconButton2}"  HorizontalAlignment="Right" VerticalAlignment="Top"  FontSize="40" ></Button>
         <TextBlock Text="{Binding PageIndex}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10" FontSize="20">
             <TextBlock.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="15"></DropShadowEffect>
