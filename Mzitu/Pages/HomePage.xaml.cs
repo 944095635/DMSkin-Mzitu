@@ -93,6 +93,7 @@ namespace Mzitu
 
                 ImageShow.Visibility = Visibility.Visible;
                 ImageShow.cs.Focus();
+                ImageListControl.SelectedIndex = -1;
             }
         }
     }
