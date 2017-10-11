@@ -27,42 +27,46 @@ namespace Mzitu
         {
             InitializeComponent();
             this.story = (base.Resources["waiting"] as Storyboard);
-
-            if (RunStateDescriptor != null)
-            {
-                RunStateDescriptor.AddValueChanged(this,delegate
-                {
-                    if (RunState)
-                    {
-                        Start();
-                    }
-                    else
-                    {
-                        Stop();
-                    }
-                });
-            }
+            
         }
 
         public bool RunState
         {
-            get {
+            get
+            {
                 return (bool)GetValue(RunStateProperty);
             }
-            set {
+            set
+            {
                 SetValue(RunStateProperty, value);
             }
         }
 
         public static readonly DependencyProperty RunStateProperty =
-            DependencyProperty.Register("RunState", typeof(bool), typeof(WaitingProgress));
+            DependencyProperty.Register("RunState", typeof(bool), typeof(WaitingProgress), new PropertyMetadata(new PropertyChangedCallback(RunStatePropertyChangedCallback)));
 
-        DependencyPropertyDescriptor RunStateDescriptor = DependencyPropertyDescriptor.FromProperty(RunStateProperty, typeof(WaitingProgress));
+        
+
+        static void RunStatePropertyChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            WaitingProgress wp = (sender as WaitingProgress);
+            if (wp != null)
+            {
+                if (wp.RunState)
+                {
+                    wp.Start();
+                }
+                else
+                {
+                    wp.Stop();
+                }
+            }
+        }
 
         public void Start()
         {
             //已经启动
-            if (Visibility==Visibility.Visible)
+            if (Visibility == Visibility.Visible)
             {
                 return;
             }
@@ -72,10 +76,29 @@ namespace Mzitu
 
         public void Stop()
         {
-            base.Dispatcher.BeginInvoke(new Action(() => {
+            base.Dispatcher.BeginInvoke(new Action(() =>
+            {
                 story.Pause(this.loading);
                 Visibility = Visibility.Collapsed;
             }));
         }
+
+        #region 旧方法 弃用
+        //DependencyPropertyDescriptor RunStateDescriptor = DependencyPropertyDescriptor.FromProperty(RunStateProperty, typeof(WaitingProgress));
+        //if (RunStateDescriptor != null)
+        //{
+        //    RunStateDescriptor.AddValueChanged(this, delegate
+        //     {
+        //         if (RunState)
+        //         {
+        //             Start();
+        //         }
+        //         else
+        //         {
+        //             Stop();
+        //         }
+        //     });
+        //}
+        #endregion
     }
 }
