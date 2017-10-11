@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Mzitu
 {
@@ -92,7 +93,8 @@ namespace Mzitu
                 ImageViewViewModel.Initialization().LoadImage();
 
                 ImageShow.Visibility = Visibility.Visible;
-                ImageShow.cs.Focus();
+                ImageShow.cs.Dispatcher.BeginInvoke(new Action<UIElement>(x => x.Focus()),
+                    DispatcherPriority.ApplicationIdle, ImageShow.cs);
                 ImageListControl.SelectedIndex = -1;
             }
         }
