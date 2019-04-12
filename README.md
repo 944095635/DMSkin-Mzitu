@@ -3,6 +3,8 @@
 MEIZITU
 WPF开发的妹子采集美图客户端,
 
+2019-4-13 修改为3.0的DMSkin库 目前只支持.net 4.5
+
 2018-11-23：1.0.0.1 修复https无法访问网站的BUG
 
 [下载体验](https://github.com/944095635/DMSkin-Mzitu/releases)
