@@ -1,4 +1,4 @@
-﻿using DMSkin.Core.Common;
+﻿using DMSkin.Core;
 using Mzitu.Model;
 using System;
 using System.Collections.Generic;
@@ -67,7 +67,7 @@ namespace Mzitu
                             //<span class="time">2017-09-30</span>
                             image.Time = Regex.Matches(ItemText, "time\"[\\s\\S]*?</span>")[0].Value.Split('>')[1].Split('<')[0];
                             //<span class="view">4,482次</span>
-                            image.Count = Regex.Matches(ItemText, "view\"[\\s\\S]*?</span>")[0].Value.Split('>')[1].Split('<')[0];
+                            //image.Count = Regex.Matches(ItemText, "view\"[\\s\\S]*?</span>")[0].Value.Split('>')[1].Split('<')[0];
 
                             image.Id = image.Href.Substring(image.Href.LastIndexOf("/") + 1);
 

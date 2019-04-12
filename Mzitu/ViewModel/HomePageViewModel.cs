@@ -1,4 +1,5 @@
-﻿using Mzitu.Model;
+﻿using DMSkin.Core;
+using Mzitu.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -54,31 +55,21 @@ namespace Mzitu
                 //homePage.Dispatcher.Invoke();
                 if (!Waterfall)//瀑布
                 {
-                     App.DispatcherHelper.Invoke(new Action(() =>
-                     {
-                         ImageList.Clear();
-                     }));
+                     Execute.OnUIThread(()=> { ImageList.Clear(); });
                  }
 
                  foreach (var item in list)
                  {
-                     App.DispatcherHelper.Invoke(new Action(() =>
-                     {
-                         ImageList.Add(item);
-                     }));
+                     Execute.OnUIThread(() => { ImageList.Add(item); });
                  }
                  Thread.Sleep(500);
-                 App.DispatcherHelper.Invoke(new Action(() =>
-                 {
-                     PageCount = pageSize;
-                }));
+
+                 Execute.OnUIThread(() => { PageCount = pageSize; });
+
                  RunState = false;
              }), new Action<Exception>((ex) =>
              {
-                 App.DispatcherHelper.Invoke(new Action(() =>
-                 {
-                     PageIndex--;
-                }));
+                 Execute.OnUIThread(() => { PageIndex--; });
                  RunState = false;
              }));
         }

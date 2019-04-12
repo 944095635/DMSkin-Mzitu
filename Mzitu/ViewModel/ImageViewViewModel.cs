@@ -1,4 +1,5 @@
-﻿using Mzitu.Model;
+﻿using DMSkin.Core;
+using Mzitu.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,11 +28,11 @@ namespace Mzitu
             Image = "";
             API.ImagePage(Id,PageIndex, new Action<string, int>((imageitem, pageSize) =>
              {
-                 App.DispatcherHelper.Invoke(new Action(() =>
-                {
-                    Image = imageitem;
-                    PageSize = pageSize;
-                }));
+                 Execute.OnUIThread(()=> 
+                 {
+                     Image = imageitem;
+                     PageSize = pageSize;
+                 });
              })
              , new Action<Exception>((ex) =>
              {
