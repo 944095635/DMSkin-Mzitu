@@ -27,7 +27,16 @@ namespace Mzitu
             {
                 try
                 {
-                    string URL = "https://www.mzitu.com/page/" + pageIndex + "/";
+                    string URL = string.Empty;
+                    if (pageIndex == 1)
+                    {
+                         URL = "https://www.mzitu.com/";
+                    }
+                    else
+                    {
+                        URL = "https://www.mzitu.com/page/" + pageIndex + "/";
+                    }
+                    
                     HTTP hTTP = new HTTP();
 
                     HttpItem httpItem = new HttpItem
@@ -115,8 +124,12 @@ namespace Mzitu
             {
                 try
                 {
-                    string URL = "https://www.mzitu.com/" + Id + "/" + pageIndex;
-
+                    string URL = $"https://www.mzitu.com/{Id}/{pageIndex}";
+                    if (pageIndex == 1)
+                    {
+                        URL = $"https://www.mzitu.com/{Id}";
+                    }
+                   
                     HTTP hTTP = new HTTP();
                     HttpItem httpItem = new HttpItem
                     {
